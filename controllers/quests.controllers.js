@@ -3,6 +3,7 @@ const Quest = require('../modules/quests.model')
 const aysncwrapper = require("../lib/aysncwrapper")
 
 // * CONTROLLER FUNCTIONS * //
+
 // ? GET ALL
  const getAllQuests = aysncwrapper( async (req, res) => {
    // GET ALL ITEMS FROM DB
