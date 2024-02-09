@@ -6,11 +6,11 @@ const Schema = mongoose.Schema;
 const questsModel = new Schema({
     name: {
         type: String,
-        require: true
+        required: true
     },
     ytLink: {
         type: String,
-        require: true
+        required: true
     }
 })
 

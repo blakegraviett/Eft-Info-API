@@ -1,13 +1,36 @@
 // * IMPORTS * //
-const Quest = require('../modules/quests.model')
+const Quest = require('../models/quests.model')
 const aysncwrapper = require("../lib/aysncwrapper")
 
 // * CONTROLLER FUNCTIONS * //
 
 // ? GET ALL
  const getAllQuests = aysncwrapper( async (req, res) => {
-   // GET ALL ITEMS FROM DB
-   const allQuests = await Quest.find()
+   
+    // QUERY MAP
+   let queryMap = {}
+
+   // PULL THE NAME FROM THE QUEREY
+   const { name } = req.query
+
+
+   // FILTER BY NAME
+   if(name) {
+    // ! MAKES THE FIRST LETTER OF A WORD CAPITAL NO MATTER WHAT 
+    function capitalizeEachWord(){
+        const str_arr = name.split(' ')
+    
+        for(i = 0; i < str_arr.length; i++){
+            str_arr[i] = str_arr[i][0].toUpperCase() + str_arr[i].slice(1)
+        }
+        return str_arr.join(' ')
+    }
+    queryMap.name = capitalizeEachWord()
+   }
+    
+   
+    // GET ALL ITEMS FROM DB
+   const allQuests = await Quest.find(queryMap)
 
    // RETURN SUCCESS MESSAGE AND TEMPLATES
    res.status(200).json({
