@@ -15,7 +15,7 @@ const {
 router.get('/', getAllQuests)
 
 // GET SINGLE BY ID 
-router.get('/id/:id', getSingleQuestByID)
+router.get('/:id', getSingleQuestByID)
 
 // POST SINGLE (CREATE) 
 router.post('/', createSingleQuest)

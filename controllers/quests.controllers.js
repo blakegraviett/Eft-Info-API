@@ -32,11 +32,11 @@ const aysncwrapper = require("../lib/aysncwrapper")
     // GET ALL ITEMS FROM DB
    const allQuests = await Quest.find(queryMap)
 
-   // RETURN SUCCESS MESSAGE AND TEMPLATES
+   // RETURN SUCCESS MESSAGE AND QUEST
    res.status(200).json({
     success: true,
     data: {
-        templates: allQuests,
+        quest: allQuests,
         message: "SUCCESS"
     }
    })
@@ -50,11 +50,11 @@ const getSingleQuestByID = aysncwrapper( async (req, res) => {
     // GET BY ID
     const foundQuest = await Quest.findById(id)
 
-    // RETURN SUCCESS MESSAGE AND FOUND TEMPLATE
+    // RETURN SUCCESS MESSAGE AND FOUND QUEST
     res.status(200).json({
         success: true,
         data: {
-            templates: foundQuest,
+            quest: foundQuest,
             message: "SUCCESS"
         }
        })
@@ -71,11 +71,11 @@ const createSingleQuest = aysncwrapper( async (req, res) => {
     // CREATE A NEW TEMPLATE
     const createdQuest = await Quest.create(newQuest)
 
-    // RETURN SUCCESS MESSAGE AND NEW TEMPLATE
+    // RETURN SUCCESS MESSAGE AND NEW QUEST
     res.status(200).json({
         success: true,
         data: {
-            templates: createdQuest,
+            quest: createdQuest,
             message: "SUCCESS"
         }
        })
@@ -94,11 +94,11 @@ const updateSingleQuest = aysncwrapper( async (req, res) => {
        // UPDATE THE TEMPLATE
        const upadteQuest = await Quest.findByIdAndUpdate(id, updatedQuest)
 
-    // RETURN SUCCESS MESSAGE AND UPDATED TEMPLATE
+    // RETURN SUCCESS MESSAGE AND UPDATED QUEST
     res.status(200).json({
         success: true,
         data: {
-            templates: upadteQuest,
+            quest: upadteQuest,
             message: "SUCCESS"
         }
        })
@@ -112,11 +112,11 @@ const deleteSingleQuest = aysncwrapper( async (req, res) => {
     // FIND AND DELETE TEMPLATE
     const deletedQuest= await Quest.findByIdAndDelete(id)
 
-    // RETURN SUCCESS MESSAGE AND UPDATED TEMPLATE
+    // RETURN SUCCESS MESSAGE AND UPDATED QUEST
     res.status(200).json({
         success: true,
         data: {
-            templates: deletedQuest,
+            quest: deletedQuest,
             message: "SUCCESS"
         }
          })

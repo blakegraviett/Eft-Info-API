@@ -9,7 +9,12 @@ const { PORT, SERVER_URL } = require('./lib/constants');
 app.use(express.json()) // body parser
 
 // * ROUTES * //
-app.use('/eft-info/api/v1/quests', require('./routes/quests.routes'));
+// QUEST DB
+    // ! TEST AUTH IS  require('./middleware/auth.middleware') REMOVE TO MAKE WORK WITH NO AUTH
+app.use('/api/v1/quests', require('./routes/quests.routes'));
+
+// AUTH 
+app.use('/api/v1/auth', require('./routes/auth.routes'));
 
 // 404 ERROR
 app.use(require('./middleware/404.middleware'))
