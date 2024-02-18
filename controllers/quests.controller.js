@@ -28,7 +28,7 @@ const aysncwrapper = require("../lib/aysncwrapper")
         },
       },
       {
-        $limit: 10,
+        $limit: 12,
       },
     ]);
 
