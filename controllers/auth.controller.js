@@ -4,7 +4,8 @@ const User = require('../models/user.model');
 const aysncwrapper = require("../lib/aysncwrapper")
 
 // * CONTROLLERS * //
-// REGISTER
+
+//  REGISTER //
 const registerUser = aysncwrapper( async (req, res) => {
     // Save the user to the db
   newUser = await User.create(req.body)
@@ -15,12 +16,13 @@ const registerUser = aysncwrapper( async (req, res) => {
     success: true,
     data: {
         user: newUser,
+        token: token,
         message: "SUCCESS!"
     }
    })
 })
 
-// * LOGIN * //
+//  LOGIN  //
 const loginUser = aysncwrapper( async (req, res) => {
 
 // 1. Get email and password from request body
@@ -66,6 +68,7 @@ if(!isMatch) {
 // 5. Create a JWT Token
 token = foundUser.genJWT()
 
+// 6. Send success
 res.status(200).json({
     success: true,
     data: {

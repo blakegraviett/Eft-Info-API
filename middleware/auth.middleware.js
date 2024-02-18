@@ -26,7 +26,9 @@ const authenticationMiddleware = async (req, res, next) => {
 		const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
 		// ATTACH THE USERNAME TO THE REQ
-		req.username = decoded.username;
+		req.user = {
+			id: decoded.id
+		} 
 		next();
 
 	} catch (error) {

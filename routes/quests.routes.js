@@ -7,7 +7,7 @@ const {
     createSingleQuest,
     updateSingleQuest,
     deleteSingleQuest
-} = require('../controllers/quests.controllers')
+} = require('../controllers/quests.controller')
 
 // * ROUTES * //
 

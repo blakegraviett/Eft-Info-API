@@ -37,7 +37,7 @@ UserSchema.pre('save', async function () {
 // Create JWT Method
 UserSchema.methods.genJWT = function() {
 
-  token = jwt.sign({name: this.name}, process.env.JWT_SECRET, {expiresIn: '30d'})
+  token = jwt.sign({id: this._id}, process.env.JWT_SECRET, {expiresIn: '30d'})
 
   return token;
 }
@@ -48,8 +48,6 @@ UserSchema.methods.comparePasswords = async function(incomingPass) {
 
   return isMatch;
 }
-
-// TODO: Compare Incoming Password w/ DB Password
 
 // * EXPORTS
 module.exports = model('User', UserSchema);

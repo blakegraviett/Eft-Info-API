@@ -10,8 +10,10 @@ app.use(express.json()) // body parser
 
 // * ROUTES * //
 // QUEST DB
-    // ! TEST AUTH IS  require('./middleware/auth.middleware') REMOVE TO MAKE WORK WITH NO AUTH
 app.use('/api/v1/quests', require('./routes/quests.routes'));
+
+// ITEMSLIST DB
+app.use('/api/v1/itemsList', require('./middleware/auth.middleware'), require('./routes/itemsList.routes'));
 
 // AUTH 
 app.use('/api/v1/auth', require('./routes/auth.routes'));
