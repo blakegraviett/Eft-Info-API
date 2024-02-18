@@ -5,8 +5,24 @@ const app = express()
 const connectToDB = require('./lib/mongoose')
 const { PORT, SERVER_URL } = require('./lib/constants');
 
+// * SECURITY * //
+const helment = require('helmet');
+const cors = require('cors');
+const xss = require('xss-clean');
+const rateLimiter = require('express-rate-limit');
+
 // * MIDDLEWARE * //
-app.use(express.json()) // body parser
+app.set('trust proxy', 1);
+app.use(
+  rateLimiter({
+    windowMs: 15 * 60 * 1000, // 15 Minutes
+    max: 100, // limit each IP to 100 requests per window (15 mins)
+  }),
+); // Rate Limit
+app.use(express.json()); // Body Parser
+app.use(helment()); // Header Security
+app.use(cors()); // CORS
+app.use(xss()); // XSS
 
 // * ROUTES * //
 // QUEST DB
