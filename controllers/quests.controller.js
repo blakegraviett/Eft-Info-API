@@ -6,17 +6,13 @@ const aysncwrapper = require("../lib/aysncwrapper")
 
 // ? GET ALL
  const getAllQuests = aysncwrapper( async (req, res) => {
-   
-    // QUERY MAP
-   let queryMap = {}
-   
     // GET ALL ITEMS FROM DB
    let allQuests = await Quest.aggregate([
     {
         $search: {
           index: "autocomplete",
           autocomplete: {
-            query: req.body.name,
+            query: req.query.name,
             path: "name",
             fuzzy: {
               maxEdits: 1,
