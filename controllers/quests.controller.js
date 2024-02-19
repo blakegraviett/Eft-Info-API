@@ -43,6 +43,23 @@ const aysncwrapper = require("../lib/aysncwrapper")
  })
 
 // ? GET SINGLE BY ID
+const getSingleQuestByName = aysncwrapper( async (req, res) => {
+  const name = req.query.name
+  
+  // GET BY NAME
+  const foundQuest = await Quest.find({name: name})
+
+  // RETURN SUCCESS MESSAGE AND FOUND QUEST
+  res.status(200).json({
+      success: true,
+      data: {
+          quest: foundQuest,
+          message: "SUCCESS"
+      }
+     })
+})
+
+// ? GET SINGLE BY ID
 const getSingleQuestByID = aysncwrapper( async (req, res) => {
     // GET ID
     const id = req.params.id
@@ -126,6 +143,7 @@ const deleteSingleQuest = aysncwrapper( async (req, res) => {
 // * EXPORTS * //
 module.exports = {
     getAllQuests,
+    getSingleQuestByName,
     getSingleQuestByID,
     createSingleQuest,
     updateSingleQuest,

@@ -3,6 +3,7 @@ const router = require('express').Router();
 
 const {
     getAllQuests,
+    getSingleQuestByName,
     getSingleQuestByID,
     createSingleQuest,
     updateSingleQuest,
@@ -13,6 +14,9 @@ const {
 
 // GET ALL  
 router.get('/', getAllQuests)
+
+// GET SINGLE BY NAME  
+router.get('/name', getSingleQuestByName)
 
 // GET SINGLE BY ID 
 router.get('/:id', getSingleQuestByID)
