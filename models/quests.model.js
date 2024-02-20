@@ -11,6 +11,10 @@ const questsModel = new Schema({
     ytLink: {
         type: String,
         required: true
+    },
+    trader: {
+        type: String,
+        required: true
     }
 })
 

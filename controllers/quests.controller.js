@@ -24,6 +24,7 @@ const aysncwrapper = require("../lib/aysncwrapper")
       {
         $project: {
           name: 1,
+          trader: 1,
           _id: 1,
         },
       },
