@@ -2,6 +2,7 @@
 const User = require('../models/user.model');
 const aysncwrapper = require("../lib/aysncwrapper")
 const crypto = require("crypto")
+const sendVerificationEmail = require('../lib/sendVerificationEmail')
 
 // * CONTROLLERS * //
 
@@ -11,6 +12,17 @@ const registerUser = aysncwrapper( async (req, res) => {
     const verificationToken = crypto.randomBytes(40).toString('hex');
     // Save the user to the db
   newUser = await User.create({name, email, password, verificationToken})
+
+    // ORIGIN
+    const origin = 'http://localhost:4200'
+
+  // Send Email
+  await sendVerificationEmail({
+    name: newUser.name, 
+    email: newUser.email, 
+    verificationToken: newUser.verificationToken,
+    origin: origin
+})
 
   // Send success
   res.status(200).json({
