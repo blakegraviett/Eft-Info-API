@@ -45,7 +45,6 @@ async function startBackend(){
 
         // LISTEN TO SERVER
         app.listen(PORT, console.log(`Server listening on ${SERVER_URL}`));
-        
     }
 
     catch (err) {
