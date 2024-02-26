@@ -1,23 +1,73 @@
 // * IMPROTS * //
-const jwt = require('jsonwebtoken')
 const User = require('../models/user.model');
 const aysncwrapper = require("../lib/aysncwrapper")
+const crypto = require("crypto")
 
 // * CONTROLLERS * //
 
 //  REGISTER //
 const registerUser = aysncwrapper( async (req, res) => {
+    const {name, email, password} = req.body 
+    const verificationToken = crypto.randomBytes(40).toString('hex');
     // Save the user to the db
-  newUser = await User.create(req.body)
-  token = newUser.genJWT()
+  newUser = await User.create({name, email, password, verificationToken})
 
   // Send success
   res.status(200).json({
     success: true,
     data: {
         user: newUser,
-        token: token,
-        message: "SUCCESS!"
+        message: "SUCCESS! Please Check email to verify account"
+    }
+   })
+})
+
+// VERIFY EMAIL
+const verfiyEmail = aysncwrapper( async (req, res) => {
+    const {verificationToken, email} = req.body;
+
+    if(!email || !verificationToken) {
+        return res.status(400).json({
+            success: true,
+            data: {
+                message: "BAD REQUEST"
+            }
+           })
+    }
+
+    // FIND USER (EMAIL)
+    const foundUser = await User.findOne({email})
+
+    if(!foundUser) {
+        return res.status(401).json({
+          success: true,
+          data: {
+              message: "UNAUTHORIZED"
+          }
+         })
+      }
+
+    if(foundUser.verificationToken != verificationToken) {
+        return res.status(400).json({
+            success: false,
+            data: {
+                message: "INVALID REQUEST"
+            }
+           })
+      }
+
+      await foundUser.updateOne({
+        isVerified: true,
+        verified: Date.now(),
+        verificationToken: ''
+      })
+
+     // Send success
+  res.status(200).json({
+    success: true,
+    data: {
+        user: email,
+        message: "SUCCESS! Email verified"
     }
    })
 })
@@ -65,6 +115,15 @@ if(!isMatch) {
        })
 }
 
+if(!foundUser.isVerified) {
+    return res.status(200).json({
+        success: true,
+        data: {
+            message: "UNAUTHORIZED! Please verify your email"
+        }
+       })
+}
+
 // 5. Create a JWT Token
 token = foundUser.genJWT()
 
@@ -84,5 +143,6 @@ res.status(200).json({
 // * EXPORTS * //
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    verfiyEmail
 } 

@@ -18,11 +18,21 @@ const UserSchema = new Schema({
     trim: true,
     unique: true
   },
+
   password: {
     type: String,
     required: true,
     minLength: 6,
   },
+
+  verificationToken: String, 
+
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
+
+  verified: Date
 });
 
 // * METHODS
@@ -34,6 +44,7 @@ UserSchema.pre('save', async function () {
   // Hash the password
   this.password = await bcrypt.hash(this.password, salt)
 })
+
 // Create JWT Method
 UserSchema.methods.genJWT = function() {
 
