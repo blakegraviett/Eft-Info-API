@@ -1,5 +1,6 @@
 // * IMPROTS * //
 const User = require('../models/user.model');
+const Token = require('../models/token.model');
 const aysncwrapper = require("../lib/aysncwrapper")
 const crypto = require("crypto")
 const sendVerificationEmail = require('../lib/sendVerificationEmail')
@@ -36,6 +37,7 @@ const registerUser = aysncwrapper( async (req, res) => {
 
 // VERIFY EMAIL
 const verfiyEmail = aysncwrapper( async (req, res) => {
+    
     const {verificationToken, email} = req.body;
 
     if(!email || !verificationToken) {
@@ -138,6 +140,20 @@ if(!foundUser.isVerified) {
 
 // 5. Create a JWT Token
 token = foundUser.genJWT()
+
+// todo Create refresh token
+// let refreshToken = '';
+
+// refreshToken = crypto.randomBytes(40).toString('hex')
+// const userAgent = req.headers['user-agent']
+// const ip = req.ip
+// const userToken = {refreshToken, ip, userAgent, user: foundUser._id}
+
+// const newToken = await Token.create(userToken);
+
+// todo Check for exsisting token
+
+
 
 // 6. Send success
 res.status(200).json({

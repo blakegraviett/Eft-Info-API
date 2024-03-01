@@ -3,7 +3,7 @@ const {mongoose, Types} = require('mongoose');
 const Schema = mongoose.Schema;
 
 // * MODEL * //
-const itemSchema = new Schema({
+const itemModel = new Schema({
     name: {
         type: String,
         required:true
@@ -36,4 +36,4 @@ const itemSchema = new Schema({
 
 
 // * EXPORTS * //
-module.exports = mongoose.model("Item", itemSchema);
+module.exports = mongoose.model("Item", itemModel);
