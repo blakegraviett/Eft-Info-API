@@ -1,6 +1,6 @@
 // * IMPORTS
-const { model, Schema } = require('mongoose');
-const bcrypt = require('bcryptjs');
+const { model, Schema } = require('mongoose')
+const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 // * MODEL
@@ -13,10 +13,13 @@ const UserSchema = new Schema({
   email: {
     type: String,
     required: true,
-    match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'],
+    match: [
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      'Please fill a valid email "address',
+    ],
     lowercase: true,
     trim: true,
-    unique: true
+    unique: true,
   },
 
   password: {
@@ -25,15 +28,15 @@ const UserSchema = new Schema({
     minLength: 6,
   },
 
-  verificationToken: String, 
+  verificationToken: String,
 
   isVerified: {
     type: Boolean,
     default: false,
   },
 
-  verified: Date
-});
+  verified: Date,
+})
 
 // * METHODS
 // Salt & Hash Password Before Save New User
@@ -46,19 +49,20 @@ UserSchema.pre('save', async function () {
 })
 
 // Create JWT Method
-UserSchema.methods.genJWT = function() {
+UserSchema.methods.createToken = function () {
+  token = jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+    expiresIn: '30d',
+  })
 
-  token = jwt.sign({id: this._id}, process.env.JWT_SECRET, {expiresIn: '30d'})
-
-  return token;
+  return token
 }
 
 // Compare Passwords
-UserSchema.methods.comparePasswords = async function(incomingPass) {
+UserSchema.methods.comparePasswords = async function (incomingPass) {
   isMatch = await bcrypt.compare(incomingPass, this.password)
 
-  return isMatch;
+  return isMatch
 }
 
 // * EXPORTS
-module.exports = model('User', UserSchema);
+module.exports = model('User', UserSchema)
